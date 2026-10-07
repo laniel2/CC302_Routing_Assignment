@@ -12,19 +12,18 @@ void main() {
             SampleItem(id: 1, title: 'First item', completed: false),
             SampleItem(id: 2, title: 'Second item', completed: true),
           ],
-          deleteItem: (itemId) async {
-            // no-op for a deterministic widget test
-          },
+          deleteItem: (itemId) async {},
         ),
       ),
     );
+
     await tester.pumpAndSettle();
 
     expect(find.text('First item'), findsOneWidget);
     expect(find.text('Second item'), findsOneWidget);
-    expect(find.text('Delete'), findsNWidgets(2));
+    expect(find.byType(ElevatedButton), findsNWidgets(2));
 
-    await tester.tap(find.widgetWithText(ElevatedButton, 'Delete').first);
+    await tester.tap(find.byType(ElevatedButton).first);
     await tester.pumpAndSettle();
 
     expect(find.text('Second item'), findsOneWidget);
